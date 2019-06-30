@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1561859311 source:c:\users\andres\documents\jla\c++\uso this\maintime.cpp
+	<iostream>
+	"Tiempo.h"
+
+1561859387 c:\users\andres\documents\jla\c++\uso this\tiempo.h
+
+1561859311 source:c:\users\andres\documents\jla\c++\uso this\tiempo.cpp
+	<iostream>
+	<iomanip>
+	"Tiempo.h"
+
