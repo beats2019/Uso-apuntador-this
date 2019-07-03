@@ -31,6 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="MainTime.cpp" />
+		<Unit filename="Tiempo.cpp" />
+		<Unit filename="Tiempo.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -1,77 +1,98 @@
 #include <iostream>
+using namespace std;
  using std::cout;
 
  #include <iomanip>
  using std::setfill;
  using std::setw;
 
- #include "Tiempo.h" // Definición de la clase Tiempo
+ #include "Tiempo.h"
 
- // función constructor para inicializar los datos privados;
- // llama a la función miembro setTiempo para establecer las variables;
- // los valores predeterminados son 0 (vea la definición de la clase)
+
  Tiempo::Tiempo( int hr, int min, int seg )
  {
- setTiempo( hr, min, seg );
- } // fin del constructor de Tiempo
+    segundosTranscurridos = 0;
+    setTiempo( hr, min, seg );
+ }
 
- // establece los valores de hora, minuto y segundo
- Tiempo &Tiempo::setTiempo( int h, int m, int s ) // observe Tiempo & return
+ //El operador & permite las llamadas en cascada
+ Tiempo &Tiempo::setTiempo( int h, int m, int s )
  {
- setHora( h );
- setMinuto( m );
- setSegundo( s );
- return *this; // permite las llamadas en cascada
- } // fin de la función setTiempo
+     //cout << "Las horas valen " << h << endl;
+     setHora( h );
+     setMinuto( m );
+     setSegundo( s );
+     return *this; // permite las llamadas en cascada
+ }
 
- // establece el valor de hora
- Tiempo &Tiempo::setHora( int h ) // observe Tiempo & return
- {
- hora = ( h >= 0 && h < 24 ) ? h : 0; // valida la hora
- return *this; // permite las llamadas en cascada
- } // fin de la función setHora
 
- // establece el valor de minuto
- Tiempo &Tiempo::setMinuto( int m ) // observe Tiempo & return
+ Tiempo &Tiempo::setHora( int h )
  {
- minuto = ( m >= 0 && m < 60 ) ? m : 0; // valida el minuto
- return *this; // permite las llamadas en cascada
- } // fin de la función setMinuto
+     segundosTranscurridos = 0;
+     int hora = ( h >= 0 && h < 24 ) ? h : 0;
+     segundosTranscurridos += ( hora * 3600 );
+     cout << "Las " << h <<" horas representan segundos: " << segundosTranscurridos << endl;
+     return *this;
+ }
 
- // establece el valor de segundo
- Tiempo &Tiempo::setSegundo( int s ) // observe Tiempo & return
- {
- segundo = ( s >= 0 && s < 60 ) ? s : 0; // valida el segundo
- return *this; // permite las llamadas en cascada
- } // fin de la función setSegundo
 
- // obtiene el valor de hora
- int Tiempo::getHora() const
+ Tiempo &Tiempo::setMinuto( int m )
  {
- return hora;
- } // fin de la función getHora
+     int minuto = ( m >= 0 && m < 60 ) ? m : 0;
+     segundosTranscurridos += ( minuto * 60 );
+     return *this;
+ }
 
- // obtiene el valor de minuto
- int Tiempo::getMinuto() const
- {
- return minuto;
- } // fin de la función getMinuto
-int Tiempo::getSegundo() const
- {
- return segundo;
- } // fin de la función getSegundo
 
- // imprime el Tiempo en formato universal (HH:MM:SS)
- void Tiempo::imprimirUniversal() const
+ Tiempo &Tiempo::setSegundo( int s )
  {
- cout << setfill( '0' ) << setw( 2 ) << hora << ":"
- << setw( 2 ) << minuto << ":" << setw( 2 ) << segundo;
- } // fin de la función imprimirUniversal
+     int segundo = ( s >= 0 && s < 60 ) ? s : 0;
+     segundosTranscurridos += segundo;
+     return *this;
+ }
 
- // imprime el Tiempo en formato estándar (HH:MM:SS AM o PM)
- void Tiempo::imprimirEstandar() const
+
+ int Tiempo::getHora()
  {
+    int a = segundosTranscurridos;
+
+       if( a / 60 >= 60 )
+       {
+           return a / 3600;
+       }else
+           return 0;
+ }
+
+ int Tiempo::getMinuto()
+ {
+    int a = segundosTranscurridos;
+
+       if( a / 60 >= 60 )
+       {
+           return ( a / 60 ) % 60;
+       }else
+           return a / 60;
+ }
+int Tiempo::getSegundo()
+ {
+    int a = segundosTranscurridos;
+       return a % 60;
+ }
+
+
+ void Tiempo::imprimirUniversal()
+ {
+ cout << setfill( '0' ) << setw( 2 ) << getHora() << ":"
+ << setw( 2 ) << getMinuto() << ":" << setw( 2 ) << getSegundo();
+ }
+
+ void Tiempo::imprimirEstandar()
+ {
+     int hora = getHora();
+     int minuto = getMinuto();
+     int segundo = getSegundo();
+
  cout << ( ( hora == 0 || hora == 12 ) ? 12 : hora % 12 )
  << ":" << setfill( '0' ) << setw( 2 ) << minuto
  << ":" << setw( 2 ) << segundo << ( hora < 12 ? " AM" : " PM" );
- } // fin de la función imprimirEstandar
+ }
